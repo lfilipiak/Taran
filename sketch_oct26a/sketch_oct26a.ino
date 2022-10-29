@@ -30,7 +30,15 @@ void receiveEvent(int howMany) {
   while (Wire.available()) {  // loop through all but the last
     char c = Wire.read();     // receive byte as a character
     digitalWrite(ledPin, c);
+    if (c == 1) requestEvent("OFF");
+    else requestEvent("ON");
   }
+}
+
+void requestEvent(char *x) {
+  Wire.beginTransmission(0x2);
+  Wire.write(x);
+  Wire.endTransmission();
 }
 void loop() {
   delay(100);
