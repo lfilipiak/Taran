@@ -1,24 +1,33 @@
+from audioop import add
 import time
 from Xbox import xbox
 from sys import exit
 from smbus import SMBus
 
+DEVICE_BUS = 1
+
 addr = 0x2  # bus address
-bus = SMBus(1)  # indicates /dev/ic2-1
+bus = SMBus(DEVICE_BUS)  # indicates /dev/ic2-1
 
 
 joy = xbox.Joystick()
 
 print("Press A B Y X")
 
-while not joy.Back():
+data = ""
+
+while not joy.Back():       
+    
+    print(bus.read_block_data(addr, 1))
 
     if joy.A():
         print("Pressed A")
         time.sleep(0.1)
+        bus.write_byte(addr, 0x1)
     elif joy.B():
         print("Pressed B")
         time.sleep(0.1)
+        bus.write_byte(addr, 0x0)
     elif joy.Y():
         print("Pressed Y")
         time.sleep(0.1)
