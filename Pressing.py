@@ -7,8 +7,7 @@ DEVICE_BUS = 1
 
 addr = 0x2  # bus address
 bus = SMBus(DEVICE_BUS)  # indicates /dev/ic2-1
-
-
+# test123
 joy = xbox.Joystick()
 
 print("Press A B Y X")
