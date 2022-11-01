@@ -1,4 +1,3 @@
-from audioop import add
 import time
 from Xbox import xbox
 from sys import exit
@@ -16,27 +15,12 @@ print("Press A B Y X")
 
 data = ""
 
-while not joy.Back():       
-    
-    print(bus.read_block_data(addr, 1))
+while not joy.Back():
 
-    if joy.A():
-        print("Pressed A")
-        time.sleep(0.1)
-        bus.write_byte(addr, 0x1)
-    elif joy.B():
-        print("Pressed B")
-        time.sleep(0.1)
-        bus.write_byte(addr, 0x0)
-    elif joy.Y():
-        print("Pressed Y")
-        time.sleep(0.1)
-    elif joy.X():
-        print("Pressed X")
-        time.sleep(0.1)
-    elif joy.Start():
+    print("A ", joy.A(), "B ", joy.B(), "X ", joy.X(), "Y ", joy.Y(), "\t"
+          "L Stick ", round(joy.leftStick()[0], 2), round(joy.leftStick()[1], 2), "R Stick ", round(joy.rightStick()[0], 2), round(joy.rightStick()[1], 2), "\t", "R Bumper", joy.rightBumper(), "R Trigger ", round(joy.rightTrigger(), 2))
+    time.sleep(0.05)
+
+    if joy.Start():
         print("Bye")
         exit(0)
-    elif joy.leftStick():
-        print(round(joy.leftStick()[0], 2), round(joy.leftStick()[1], 2))
-        time.sleep(0.1)
