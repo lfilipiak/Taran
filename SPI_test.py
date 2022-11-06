@@ -27,36 +27,29 @@ rbumper = 0
 
 
 while not joy.Back():
-    index = 0
-    if index == 3:
-        continue
+
 
     if joy.A() != buttonA:
         buttonA = joy.A()
         send_byte = buttonA
         spi.xfer2([0xF, send_byte, 0xA])
-        index += 1
 
     if joy.B() != buttonB:
         buttonB = joy.B()
         send_byte = buttonB
         spi.xfer2([0xE, send_byte, 0xA])
-        index += 1
 
     if joy.X() != buttonX:
         buttonX = joy.X()
         send_byte = buttonX
         spi.xfer2([0xD, send_byte, 0xA])
-        index += 1
 
     if joy.Y() != buttonY:
         buttonY = joy.Y()
         send_byte = buttonY
         spi.xfer2([0xC, send_byte, 0xA])
-        index += 1
 
     if int(round(joy.rightTrigger(), 2) * 100) != rbumper:
         rbumper = int(round(joy.rightTrigger(), 2) * 100)
         spi.xfer2([0x5, rbumper, 0xA])
         print([0x5, rbumper, 0xA])
-        index += 1
