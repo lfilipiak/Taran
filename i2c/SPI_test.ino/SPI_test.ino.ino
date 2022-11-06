@@ -86,20 +86,3 @@ void loop () {
 
   }
 }
-
-
-
-
-
-
-
-
-
-  
-  //  byte in_byte;
-  //  // SPIF indicates transmission complete (byte received)
-  //  if ((SPSR & (1 << SPIF)) != 0) {
-  //    in_byte = SPDR;
-  // Handle the input code here
-  // Set return_val to the value you want to return
-  // SPDR = 0x50;
