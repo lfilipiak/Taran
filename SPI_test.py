@@ -19,7 +19,7 @@ send_byte = 0
 
 buttonA = 0
 buttonB = 0
-buttonX = 0      # bytes(str_1, 'UTF-8')
+buttonX = 0
 buttonY = 0
 
 left_stick = []
