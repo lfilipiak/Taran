@@ -28,7 +28,6 @@ rbumper = 0
 
 while not joy.Back():
 
-
     if joy.A() != buttonA:
         buttonA = joy.A()
         send_byte = buttonA
