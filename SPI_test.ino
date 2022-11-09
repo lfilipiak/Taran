@@ -9,80 +9,104 @@ void setup() {
   Serial.begin(9600);
   // Set the Master in Slave out as an output
   pinMode(MISO, OUTPUT);
+  pinMode(10, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(8, OUTPUT);
   pinMode(7, OUTPUT);
   pinMode(6, OUTPUT);
   pinMode(5, OUTPUT);
-  pinMode(4, OUTPUT);
   pinMode(3, OUTPUT);
-
-  int buttonA = 0;
-  int buttonB = 0;
-  int buttonC = 0;
-  int buttonD = 0;
-
-  int myArray[5];
+  pinMode(2, OUTPUT);
 
   SPCR |= _BV(SPE);  // Turn SPI in Slave Mode
   SPI.attachInterrupt();
+
+  buff[0] = 0xF;
+  buff[1] = 0x1;
+  buff[2] = 0xA;
+  //
+  //  Serial.println(buff[0]);
+  //  Serial.println(buff[1]);
+  //  Serial.println(buff[2]);
 }
 
 ISR (SPI_STC_vect) { // SDPR - value from master
-  //  byte c = SPDR;
+  byte c = SPDR;
   SPDR = SPDR + 10;
   buff[index] = SPDR; // read byte from SPI Data Register
   index++;
   if (index == 3) {
     index = 0;
     process = true;
+    //  _delay_ms(100);
   }
 }
 
 void loop () {
+
+  digitalWrite(8, LOW);
+  digitalWrite(9, HIGH);
+
+  digitalWrite(6, LOW);
+  digitalWrite(7, HIGH);
+
   if (process) {
     process = false;
+    //
+    Serial.println(buff[0]);
+    Serial.println(buff[1]);
+    Serial.println(buff[2]);
+  }
 
-    Serial.println(buff[0], HEX);
-    Serial.println(buff[1], HEX);
-    Serial.println(buff[2], HEX);
+
+
+  if ( buff[0] == 0x5) {
+    width = buff[1] * 255 / 100;
+    analogWrite(3, width);
+    analogWrite(5, width);
   }
 
   if (buff[0] == 0xF & buff[2] == 0xA) {
     if (buff[1] == 0x1) {
-      digitalWrite(6, HIGH);
+      digitalWrite(2, HIGH);
     }
     else if (buff[1] == 0x0) {
-      digitalWrite(6, LOW);
-    }
-  }
-  if (buff[0] == 0xE & buff[2] == 0xA) {
-    if (buff[1] == 0x1) {
-      digitalWrite(4, HIGH);
-    }
-    else if (buff[1] == 0x0) {
-      digitalWrite(4, LOW);
-    }
-  }
-  if (buff[0] == 0xD & buff[2] == 0xA) {
-    if (buff[1] == 0x1) {
-      digitalWrite(7, HIGH);
-    }
-    else if (buff[1] == 0x0) {
-      digitalWrite(7, LOW);
-    }
-  }
-  if (buff[0] == 0xC & buff[2] == 0xA) {
-    if (buff[1] == 0x1) {
-      digitalWrite(5, HIGH);
-    }
-    else if (buff[1] == 0x0) {
-      digitalWrite(5, LOW);
+      digitalWrite(2, LOW);
     }
   }
 
-  if (buff[0] == 0x5 & buff[2] == 0xA) {
-    width = buff[1]*255/100;
+  if (buff[0] == 0xAA & buff[2] == 0xBB) {
+    width = buff[1] * 255 / 100;
     Serial.println(width);
-    analogWrite(3, width);   
-
+    analogWrite(10, width);
   }
+
+  
+  //    if (buff[0] == 0xE & buff[2] == 0xA) {
+  //      if (buff[1] == 0x1) {
+  //        digitalWrite(4, HIGH);
+  //      }
+  //      else if (buff[1] == 0x0) {
+  //        digitalWrite(4, LOW);
+  //      }
+  //    }
+  //    if (buff[0] == 0xD & buff[2] == 0xA) {
+  //      if (buff[1] == 0x1) {
+  //        digitalWrite(7, HIGH);
+  //      }
+  //      else if (buff[1] == 0x0) {
+  //        digitalWrite(7, LOW);
+  //      }
+  //    }
+  //    if (buff[0] == 0xC & buff[2] == 0xA) {
+  //      if (buff[1] == 0x1) {
+  //        digitalWrite(5, HIGH);
+  //      }
+  //      else if (buff[1] == 0x0) {
+  //        digitalWrite(5, LOW);
+  //      }
+  //    }
+
+
+
 }
