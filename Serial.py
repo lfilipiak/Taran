@@ -10,12 +10,13 @@ buttonY = 0
 buttonGuide = 0
 
 buttonStart = 0
-left_stick_X = 50
+leftStickX = 50
 rbumper = 0
 lbumper = 0
 
 if __name__ == "__main__":
     ser = serial.Serial('/dev/ttyACM1', 9600, timeout=1)
+    # ser = serial.Serial('/dev/ttyAMA0', 9600, timeout=1)
     ser.flush()
 
     while True:
@@ -25,7 +26,7 @@ if __name__ == "__main__":
             msg = f"Pressed_A_{send_byte}\n"
             ser.write(msg.encode())
             print(f"Pressed_A_{send_byte}\n")
-        
+
         if int(round(joy.rightTrigger(), 2) * 100) != rbumper:
             rbumper = int(round(joy.rightTrigger(), 2) * 100)
             send_byte = rbumper
@@ -40,9 +41,13 @@ if __name__ == "__main__":
             ser.write(msg.encode())
             print(f"lbumper_{send_byte}")
 
-
-
-
+            # Servo left and right sweap, signal from 0 to 100
+        if int(round((joy.leftX()+1)/2, 2) * 100) != leftStickX:
+            leftStickX = int(round((joy.leftX()+1)/2, 2) * 100)
+            send_byte = leftStickX
+            msg = f"leftStickX_{send_byte}\n"
+            ser.write(msg.encode())
+            print(f"leftStickX_{send_byte}")
 
         # ledstate = input(">>>>    ")
         # if ledstate == "1":
