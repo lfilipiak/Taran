@@ -50,9 +50,3 @@ if __name__ == "__main__":
             msg = f"leftStickX_{send_byte}\n"
             ser.write(msg.encode())
             print(f"leftStickX_{send_byte}")
-
-        # ledstate = input(">>>>    ")
-        # if ledstate == "1":
-        #     ser.write(b"power_on\n")
-        # elif ledstate == "0":
-        #     ser.write(b"power_off\n")
