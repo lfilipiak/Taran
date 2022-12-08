@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import serial
 from Xbox import xbox
 
@@ -15,8 +17,8 @@ rbumper = 0
 lbumper = 0
 
 if __name__ == "__main__":
-    ser = serial.Serial('/dev/ttyACM1', 9600, timeout=1)
-    # ser = serial.Serial('/dev/ttyAMA0', 9600, timeout=1)
+    # ser = serial.Serial('/dev/ttyACM1', 9600, timeout=1)
+    ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
     ser.flush()
 
     while True:
